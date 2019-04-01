@@ -43,7 +43,8 @@ print('[*] ============================================')
 print('[*] 10 Most Frequently Occurring Domains Queried')
 print('[*] ============================================')
 #for domain, count in cnt_domains.most_common(10):
-for method, count in cnt_domains.most_common(10):
     print('[*] %30s: %d' % (domain, count))
+for method, count in cnt_domains.most_common(10):
+    print('[*] %30s: %d' % (method, count))
 print('[*] ============================================')
 
