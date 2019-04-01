@@ -4,7 +4,8 @@ import re
 from collections import Counter
 
 # regular expression
-rexp = r'(?P<timestamp>\d{1,2}-\w{3}-\d{4} \d{2}:\d{2}:\d{2}\.\d{3}) client (?P<client>(?:\d{1,3}\.){3}\d{1,3}).+query: (?P<domain>.+) IN (?P<qtype>[A-Z]+) \+.+\({2}(?P<server>(?:\d{1,3}\.){3}\d{1,3})\){2}'
+#rexp = r'(?P<timestamp>\d{1,2}-\w{3}-\d{4} \d{2}:\d{2}:\d{2}\.\d{3}) client (?P<client>(?:\d{1,3}\.){3}\d{1,3}).+query: (?P<domain>.+) IN (?P<qtype>[A-Z]+) \+.+\({2}(?P<server>(?:\d{1,3}\.){3}\d{1,3})\){2}'
+rexp = r'(?P<method>[A-Z]{4}) status (?P<status>\d{3} +)'
 
 # create counter dictionary
 cnt_domains = Counter()
@@ -16,7 +17,8 @@ failed = 0
 for line in f:
     m = re.match(rexp, line)
     if m:
-        cnt_domains.update([m.group('domain')])
+        cnt_domains.update([m.group('method')])
+        #cnt_domains.update([m.group('domain')])
         matched += 1
     else:
         failed += 1
@@ -40,7 +42,8 @@ print('[*] %d lines failed to match the regular expression' % (failed), end='\n\
 print('[*] ============================================')
 print('[*] 10 Most Frequently Occurring Domains Queried')
 print('[*] ============================================')
-for domain, count in cnt_domains.most_common(10):
+#for domain, count in cnt_domains.most_common(10):
+for method, count in cnt_domains.most_common(10):
     print('[*] %30s: %d' % (domain, count))
 print('[*] ============================================')
 
